@@ -6,15 +6,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.util.Map;
 
 @RestController
 @Slf4j
 public class Controller {
 
+    private AgentRepository agentRepository;
+
+    public Controller(AgentRepository agentRepository) {
+        super();
+        this.agentRepository = agentRepository;
+    }
+
     @RequestMapping(value = "/hello")
-    public ResponseEntity<String> sayHello() {
+    public ResponseEntity<Map<String, Object>> sayHello() {
         log.info("passing through...");
-        return new ResponseEntity<>("hello on " + new Date().toString(), HttpStatus.OK);
+        return new ResponseEntity<>(agentRepository.sayHello(), HttpStatus.OK);
     }
 }

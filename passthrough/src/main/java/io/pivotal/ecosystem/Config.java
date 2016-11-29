@@ -1,9 +1,12 @@
 package io.pivotal.ecosystem;
 
-
+import feign.Feign;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.InetAddress;
@@ -22,5 +25,10 @@ public class Config implements ApplicationListener<EmbeddedServletContainerIniti
         } catch (UnknownHostException e) {
             log.error("oops: ", e);
         }
+    }
+
+    @Bean
+    public AgentRepository agentRepository() {
+        return Feign.builder().encoder(new GsonEncoder()).decoder(new GsonDecoder()).target(AgentRepository.class, "http://127.0.0.1:9090/");
     }
 }

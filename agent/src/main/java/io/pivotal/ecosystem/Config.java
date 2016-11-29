@@ -1,6 +1,5 @@
 package io.pivotal.ecosystem;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -18,7 +17,6 @@ public class Config implements ApplicationListener<EmbeddedServletContainerIniti
         log.info("agent port: " + event.getEmbeddedServletContainer().getPort());
         try {
             log.info("agent address: " + InetAddress.getLocalHost().getHostAddress());
-            log.info("agent name: " + InetAddress.getLocalHost().getHostName());
         } catch (UnknownHostException e) {
             log.error("oops: ", e);
         }
