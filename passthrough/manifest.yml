@@ -4,4 +4,3 @@ applications:
   memory: 1G
   instances: 1
   path: target/passthrough-1.0.0.jar
-  buildpack: https://github.com/cf-platform-eng/basic-boot-buildpack
