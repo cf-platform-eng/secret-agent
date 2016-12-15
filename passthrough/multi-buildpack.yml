@@ -1,0 +1,3 @@
+buildpacks:
+  -  https://github.com/cf-platform-eng/basic-boot-buildpack#just-agent
+  -  https://github.com/cf-platform-eng/basic-boot-buildpack#no-agent
