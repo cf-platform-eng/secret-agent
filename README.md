@@ -36,13 +36,32 @@ applications:
 Recommended by the Buildpacks team in NY, might be fully supported in the future.
 
 ####Process
-1. Modify the custom buildpack created above to just run the agent
-1. Publish the buildpack
-1. Use the custom buildpack as per the instructions on the multi-buildpacks site.
+1. check out and build the [multi](https://github.com/cf-platform-eng/secret-agent/tree/multi) branch of the secret agent. It is [configured](https://github.com/cf-platform-eng/secret-agent/blob/multi/agent/src/main/resources/application.properties) so that the agent is not listening on the "usual ports and IP" (so it will not conflict with the passthrough and can't be reached fromoutside the container).
+1. Use the [just-agent](https://github.com/cf-platform-eng/basic-boot-buildpack/tree/just-agent) branch of the custom buildpack created above: it is set to run just the agent.
+1. copy the passthrough jar file and the [multi-buildpack.yml](https://github.com/cf-platform-eng/secret-agent/blob/multi/passthrough/multi-buildpack.yml) file to a new, empty temp directory
+1. from the new temp directory do a cf push
+
+  ```bash
+  cf push passthrough
+  ```
+  
+1. Validate that the passthrough is able to cummunicate with the agent
+
+  ```bash
+  curl -i http://passthrough.your.domain/hello
+  
+  HTTP/1.1 200 OK
+  Content-Type: application/json;charset=UTF-8
+  Date: Fri, 16 Dec 2016 14:44:13 GMT
+  X-Vcap-Request-Id: 255cdcd7-cd29-4d17-4313-ca2bfe074f4a
+  Content-Length: 37
+
+  {"hello from 10.254.0.50":2147483647}
+  ```
+  The "hello" response is coming from the agent, proxied by the passthrough.
 
 ####Pros
- * Might be the supported way to do this going forward
- * Maintained by the official buildpacks team
+ * Multi-builpack is supposed to be the officially supported way to do this going forward
 
 ####Cons
  * Not supported yet
