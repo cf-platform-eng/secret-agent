@@ -1,3 +1,5 @@
+# secret-agent is no longer actively maintained by VMware.
+
 #secret-agent
 a POC to try out various approaches for embedding a java agent in a continer alongside a pushed app.
 
